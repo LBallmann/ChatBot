@@ -8,13 +8,14 @@ namespace ChatBot
     /// </summary>
     class Client
     {
-
+        #region private_vars
         private TcpClient tcpClient;
         private StreamReader inputStream;
         private StreamWriter outputStream;
         private string username;
         private string password;
         private string channel;
+        #endregion
 
         /// <summary>
         /// This constructs the client and initializes the ip and port that we connect to.
@@ -96,6 +97,5 @@ namespace ChatBot
                 sendMessage(message.Substring("!echo ".Length));
             }
         }
-
     }
 }
