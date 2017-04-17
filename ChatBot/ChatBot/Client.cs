@@ -52,6 +52,12 @@ namespace ChatBot
             channel = room;
             outputStream.WriteLine("JOIN #" + channel);
             outputStream.Flush();
+            bool joined = false;
+            while (!joined)
+            {
+                string message = readLine(); //End of /Names list
+                joined = message.Contains("End of /NAMES list");
+            }
         }
 
         /// <summary>
@@ -73,6 +79,22 @@ namespace ChatBot
         internal string readLine()
         {
             return inputStream.ReadLine();
+        }
+
+        /// <summary>
+        /// This method will process the messages that come in and start doing the appropriate action
+        /// </summary>
+        /// <param name="message">The incoming message</param>
+        internal void processChat(string message)
+        {
+            if (message.Contains("!hi"))
+            {
+                sendMessage("Hello Hello");
+            }
+            else if (message.Contains("!echo"))
+            {
+                sendMessage(message.Substring("!echo ".Length));
+            }
         }
 
     }
