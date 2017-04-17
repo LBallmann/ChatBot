@@ -10,9 +10,18 @@
             while (true)
             {
                 string message = client.readLine();
-                if (message.Contains("Hi"))
+                if(message != null)
                 {
-                    client.sendMessage("Hello Hello");
+                    System.Console.WriteLine(message);
+                    if (message.Equals("PING: tmi.twitch.tv"))
+                    {
+                        client.sendMessage("PONG :tmi.twitch.tv");
+                    }
+                    message = message.ToLower();
+                    if (message.Contains("!hi"))
+                    {
+                        client.sendMessage("Hello Hello");
+                    }
                 }
             }
         }
