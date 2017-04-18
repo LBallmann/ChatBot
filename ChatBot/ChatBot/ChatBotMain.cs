@@ -23,7 +23,7 @@
                     }
                     #endregion
 
-                    string actualMessage = message.Substring(message.LastIndexOf(':')+1).ToLower();
+                    string actualMessage = message.Substring(message.LastIndexOf(':')+1);
                     client.processChat(actualMessage);
                 }
             }

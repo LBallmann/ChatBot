@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Net.Sockets;
 
 namespace ChatBot
@@ -15,6 +16,7 @@ namespace ChatBot
         private string username;
         private string password;
         private string channel;
+        private IDictionary<string, string> commands;
         #endregion
 
         /// <summary>
@@ -27,6 +29,7 @@ namespace ChatBot
             tcpClient = new TcpClient(ip, port);
             inputStream = new StreamReader(tcpClient.GetStream());
             outputStream = new StreamWriter(tcpClient.GetStream());
+            commands = CommandHandler.readCommands();
         }
 
         /// <summary>
@@ -88,13 +91,23 @@ namespace ChatBot
         /// <param name="message">The incoming message</param>
         internal void processChat(string message)
         {
-            if (message.Contains("!hi"))
+            string[] command;
+            if (message.Contains(" "))
             {
-                sendMessage("Hello Hello");
+                command = message.Split(new char[] { ' ' }, 2);
             }
-            else if (message.Contains("!echo"))
+            else
             {
-                sendMessage(message.Substring("!echo ".Length));
+                command = new string[] { message };
+            }
+            if (commands.ContainsKey(command[0].ToLower()))
+            {
+                string response = commands[command[0]];
+                if (command.Length > 1)
+                {
+                    response = response.Replace("*", command[1]);
+                }
+                sendMessage(response);
             }
         }
     }
