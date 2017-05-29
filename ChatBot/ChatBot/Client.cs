@@ -9,7 +9,7 @@ namespace ChatBot
     /// </summary>
     class Client
     {
-        #region private_vars
+        #region private vars
         private TcpClient tcpClient;
         private StreamReader inputStream;
         private StreamWriter outputStream;
